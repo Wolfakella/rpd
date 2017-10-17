@@ -9,9 +9,9 @@ use common\models\User;
  */
 class SignupForm extends Model
 {
-    public $username;
     public $email;
     public $password;
+    public $password_repeat;
 
 
     /**
@@ -20,19 +20,29 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Email уже занят другим пользователем.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+	    ['password_repeat', 'required'],
+	    ['password_repeat', 'string', 'min' => 6],
+	    ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => 'Пароли не совпадают!'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'email' => 'Ваш E-mail',
+            'password' => 'Пароль',
+	    'password_repeat' => 'Пароль ещё раз',
         ];
     }
 
@@ -48,7 +58,6 @@ class SignupForm extends Model
         }
         
         $user = new User();
-        $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();

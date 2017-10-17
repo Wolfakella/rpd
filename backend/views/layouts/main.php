@@ -35,6 +35,17 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-left'],
+        'items' => [
+		['label' => 'Факультеты', 'url' => ['/faculty/index']],
+		['label' => 'Кафедры', 'url' => ['/department/index']],
+		['label' => 'Преподаватели', 'url' => ['/teacher/index']],
+		['label' => 'Учебные планы', 'url' => ['/plan/index']],
+		['label' => 'Аннотации', 'url' => ['/program/index']],
+		
+	],
+    ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
     ];
@@ -44,7 +55,7 @@ AppAsset::register($this);
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . Yii::$app->user->identity->email . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
