@@ -71,6 +71,17 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+	public function afterSave($insert, $changedAttributes)
+	{
+		parent::afterSave($insert, $changedAttributes);
+		if($insert)
+		{
+			$model = new Teacher();
+			$model->user_id = $this->id;
+			$model->save();
+		}
+	}
+
     /**
      * @inheritdoc
      */

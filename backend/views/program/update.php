@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /* @var $model common\models\Program */
 
 $this->title = Yii::t('app', 'Update Program: {nameAttribute}', [
-    'nameAttribute' => $model->title,
+    'nameAttribute' => $model->name,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Programs'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="program-update">

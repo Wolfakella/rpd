@@ -33,9 +33,9 @@ class Department extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['faculty_id'], 'integer'],
+            [['id', 'faculty_id'], 'integer'],
             [['name', 'short_name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['id', 'name'], 'unique'],
             [['faculty_id'], 'exist', 'skipOnError' => true, 'targetClass' => Faculty::className(), 'targetAttribute' => ['faculty_id' => 'id']],
         ];
     }
@@ -72,8 +72,38 @@ class Department extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getPrograms()
     {
-        return $this->hasMany(User::className(), ['department_id' => 'id']);
+        return $this->hasMany(Program::className(), ['department_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTeachers()
+    {
+        return $this->hasMany(Teacher::className(), ['department_id' => 'id']);
+    }
+
+	public function getPlansSuccess()
+	{
+		$countCompleted = 0;
+		$countTotal = 0;
+		foreach($this->plans as $plan)
+		{
+			$countCompleted += $plan->completed;		
+			$countTotal += $plan->count;
+		}
+		if($countTotal == 0) return 1;
+		else return $countCompleted / $countTotal;
+	}
+
+	public function getProgramsSuccess()
+	{
+		$countCompleted = $this->getPrograms()->where(['not', ['link' => null]])->count();
+		$countTotal = $this->getPrograms()->count();
+
+		if($countTotal == 0) return 1;
+		else return $countCompleted / $countTotal;
+	}
 }

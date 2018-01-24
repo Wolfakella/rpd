@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Plan'), ['create'], ['class' => 'btn btn-success']) ?>
+	<?= Html::a(Yii::t('app', 'Upload Plan'), ['upload'], ['class' => 'btn btn-warning']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,20 +26,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 //            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
+            'code',
             'title',
-            'link',
-//            'department_id',
+            'profile',
+            'type',
+            //'link',
             [
-                'attribute' => 'Кафедра',
+                'attribute' => 'Department ID',
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $column){
-			if(isset($model->department))
-	                    	return Html::a($model->department->name, ['department/view', 'id' => $model->department_id]);
-			else
-				return null;
+                    return Html::a($model->department->name, ['department/view', 'id' => $model->department_id]);
                 }
             ],
+            'year',
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

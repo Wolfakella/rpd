@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Teacher */
+/* @var $model common\models\Plan */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Teachers'), 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Plans'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="teacher-view">
+<div class="plan-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,20 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'lastname',
-            'middlename',
-            'firstname',
-//            'department_id',
-            [
-                'attribute' => 'Кафедра',
-                'format' => 'html',
-                'value' => function ($model, $widget){
-			if(isset($model->department))
-	                    	return Html::a($model->department->name, ['department/view', 'id' => $model->department_id]);
-			else
-				return null;
-                }
-            ]	    
+            'code',
+            'title',
+            'profile',
+            'type',
+            'link',
+            'department_id',
+            'year',
         ],
     ]) ?>
 

@@ -54,4 +54,10 @@ class Faculty extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Department::className(), ['faculty_id' => 'id']);
     }
+
+    public function getPlans()
+    {
+	return $this->hasMany(Plan::className(), ['department_id' => 'id'])
+		->viaTable('department', ['faculty_id' => 'id']);
+    }
 }

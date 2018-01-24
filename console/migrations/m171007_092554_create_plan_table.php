@@ -17,9 +17,13 @@ class m171007_092554_create_plan_table extends Migration
     {
         $this->createTable('plan', [
             'id' => $this->primaryKey(),
-            'title' => $this->string()->notNull()->unique(),
-            'link' => $this->string()->notNull(),
+	    'code' => $this->string(),
+            'title' => $this->string(),
+	    'profile' => $this->string(),
+	    'type' => $this->string(),
+            'link' => $this->string(),
             'department_id' => $this->integer(),
+	    'year' => $this->integer(),
         ]);
 
         // creates index for column `department_id`

@@ -14,13 +14,21 @@ use common\models\Department;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'profile')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'department_id')->dropDownList(
 	ArrayHelper::map(Department::find()->all(), 'id', 'name')
 	) ?>
+
+    <?= $form->field($model, 'year')->input('number') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

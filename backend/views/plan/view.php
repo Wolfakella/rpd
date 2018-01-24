@@ -29,11 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'code',
             'title',
-            'link',
+            'profile',
+            'type',
+	    [
+	    	'attribute' => 'link',
+		'format' => 'url'
+	    ],
 //            'department_id',
             [
-                'attribute' => 'Кафедра',
+                'attribute' => 'Факультет',
                 'format' => 'html',
                 'value' => function ($model, $widget){
 			if(isset($model->department))
@@ -42,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				return null;
                 }
             ],
+            'year',
         ],
     ]) ?>
 

@@ -18,8 +18,8 @@ class ProgramSearch extends Program
     public function rules()
     {
         return [
-            [['id', 'index', 'plan_id', 'teacher_id'], 'integer'],
-            [['title'], 'safe'],
+            [['id', 'plan_id', 'index', 'department_id', 'teacher_id'], 'integer'],
+            [['code', 'name'], 'safe'],
         ];
     }
 
@@ -47,6 +47,9 @@ class ProgramSearch extends Program
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+	    'pagination' => [
+	    	'pageSize' => 50,
+	    ],
         ]);
 
         $this->load($params);
@@ -60,12 +63,14 @@ class ProgramSearch extends Program
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'index' => $this->index,
             'plan_id' => $this->plan_id,
+            'index' => $this->index,
+            'department_id' => $this->department_id,
             'teacher_id' => $this->teacher_id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'code', $this->code])
+            ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

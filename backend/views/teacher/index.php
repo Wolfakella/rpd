@@ -25,10 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 
             //'id',
+	    'user.email',
             'lastname',
-            'middlename',
             'firstname',
-            'department_id',
+            'middlename',
+            [
+                'attribute' => 'department.name',
+                'format' => 'html',
+                'value' => function ($model, $key, $index, $column){
+                    return Html::a($model->department->name, ['department/view', 'id' => $model->department_id]);
+                }
+            ],
+
             //'user_id',
 
             ['class' => 'yii\grid\ActionColumn'],

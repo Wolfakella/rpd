@@ -18,8 +18,8 @@ class PlanSearch extends Plan
     public function rules()
     {
         return [
-            [['id', 'department_id'], 'integer'],
-            [['title', 'link'], 'safe'],
+            [['id', 'department_id', 'year'], 'integer'],
+            [['code', 'title', 'profile', 'type', 'link'], 'safe'],
         ];
     }
 
@@ -47,6 +47,10 @@ class PlanSearch extends Plan
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+	    'pagination' => [
+	    	'pageSize' => 50,
+	    ],
+	    
         ]);
 
         $this->load($params);
@@ -61,9 +65,13 @@ class PlanSearch extends Plan
         $query->andFilterWhere([
             'id' => $this->id,
             'department_id' => $this->department_id,
+            'year' => $this->year,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere(['like', 'code', $this->code])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'profile', $this->profile])
+            ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'link', $this->link]);
 
         return $dataProvider;

@@ -3,9 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\VarDumper;
 use common\models\Plan;
 use common\models\PlanSearch;
+use common\models\Program;
+use backend\models\UploadPlan;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -104,6 +108,54 @@ class PlanController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionUpload()
+    {
+	$uploadPlan = new UploadPlan();
+
+        if (Yii::$app->request->isPost) {
+        	$uploadPlan->department_id = Yii::$app->request->post('UploadPlan')['department_id'];
+        	$uploadPlan->uploadedFile = UploadedFile::getInstance($uploadPlan, 'uploadedFile');
+
+        	if ($uploadPlan->upload()) {
+			$model = new Plan($uploadPlan->department_id, $uploadPlan->getFilePath());
+
+        		if($model->save())
+			{
+				$transaction = Plan::getDb()->beginTransaction();
+				for($i = 0; $i < $model->programCount; $i++)
+				{					
+					$program = new Program($model->link, $i);
+					$program->plan_id = $model->id;
+					if(!$program->validate('departmen_id')) $program->department_id = NULL;
+					if(!$program->save())
+					{
+						$transaction->rollBack();
+						$model->delete();
+						print_r($program);
+						return $this->render(
+							'@app/views/site/error', 
+							['message' => 'Database insertion error: Program #'. $i]
+						);					
+					}
+				}
+				$transaction->commit();
+        			return $this->redirect(['update', 'id' => $model->id]);        		
+			} else
+				return $this->render(
+					'@app/views/site/error', 
+					['message' => 'Database insertion error: '.$model->errors]
+				);
+        	} else 
+			return $this->render(
+				'@app/views/site/error', 
+				['message' => 'File upload error: '.$uploadPlan->uploadedFile->error]
+			);
+        } else
+		return $this->render('upload', [
+			'model' => $uploadPlan,
+		]);
     }
 
     /**

@@ -57,6 +57,11 @@ class Teacher extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getCredentials()
+    {
+	return $this->lastname .' ' . $this->firstname . ' ' . $this->middlename;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -72,4 +77,28 @@ class Teacher extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPrograms()
+    {
+        return $this->hasMany(Program::className(), ['teacher_id' => 'id']);
+    }
+
+	public function getCompleted()
+	{
+		return $this->getPrograms()->where(['not', ['link' => null]])->count();
+	}
+
+	public function getCount()
+	{
+		return $this->getPrograms()->count();
+	}
+
+	public function getPercent()
+	{
+		if(!$this->count) return 0;
+		else return $this->completed / $this->count;
+	}
 }

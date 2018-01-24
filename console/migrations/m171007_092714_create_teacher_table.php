@@ -9,7 +9,7 @@ use yii\db\Migration;
  * - `department`
  * - `user`
  */
-class m171017_173555_create_teacher_table extends Migration
+class m171007_092714_create_teacher_table extends Migration
 {
     /**
      * @inheritdoc
