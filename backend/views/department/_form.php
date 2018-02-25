@@ -1,9 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\Faculty;
-use yii\helpers\ArrayHelper;
+
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Department */

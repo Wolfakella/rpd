@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				    ],
 				    //'name',
 				    'link',
-				    'teacher.lastname',
+				    'teacher.credentials',
 				    ['attribute' => 'department.name',
 				     'options' => ['class' => 'col-xs-3'],
 				     'contentOptions' => [

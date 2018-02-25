@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $model common\models\Department */
 
@@ -40,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                 'value' => function ($model, $widget){
 			if(isset($model->faculty))
-	                    	return Html::a($model->faculty->name, ['faculty/view', 'id' => $model->faculty_id]);
+	                    	return Html::a($model->faculty->name, ['report/faculty', 'id' => $model->faculty_id]);
 			else
 				return null;
                 }
@@ -61,16 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			    'code',
 			    'title',
 			    'percent',
-			 /*   [
-				'attribute' => 'faculty.name',
-				'format' => 'html',
-				'value' => function ($model, $key, $index, $column){
-				    return Html::a($model->faculty->name, ['faculty/view', 'id' => $model->faculty_id]);
-				}
-			    ], */
-
-
-			    ['class' => 'yii\grid\ActionColumn'],
+				['class' => 'yii\grid\ActionColumn',
+				'controller' => 'plan',
+				'template' => '{view}',
+				],
 			],
 		    ]); ?>
 	  </div>
@@ -90,16 +83,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			    'lastname',
 			    'firstname',
 			    'percent',
-			 /*   [
-				'attribute' => 'faculty.name',
-				'format' => 'html',
-				'value' => function ($model, $key, $index, $column){
-				    return Html::a($model->faculty->name, ['faculty/view', 'id' => $model->faculty_id]);
-				}
-			    ], */
-
-
-			    ['class' => 'yii\grid\ActionColumn'],
+				['class' => 'yii\grid\ActionColumn',
+				'controller' => 'teacher',
+				'template' => '{view}',
+				],
 			],
 		    ]); ?>
 	  </div>
@@ -121,6 +108,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				    'code',
 				    'name',
 				    'plan.title',
+					[
+						'attribute' => 'Преподаватель',
+						'format' => 'html',
+						'content' => function ($model, $key, $index, $column){
+						    return $this->renderAjax('@frontend/views/ajax/_form');
+						}
+					],
 				    ['class' => 'yii\grid\ActionColumn'],
 				],
 			    ]); ?>

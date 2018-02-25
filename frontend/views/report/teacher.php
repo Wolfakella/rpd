@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class'=>'grid-view table-responsive'],
 				'columns' => [
 				    'id',
-				    'title',
+				    'name',
 				    'department.name',
 				],
 			    ]); ?>

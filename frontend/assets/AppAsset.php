@@ -13,8 +13,12 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+	'css/autocomplete.css',
     ];
     public $js = [
+//	'js/alert.js',
+	'js/autocomplete.js',
+	'js/test.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

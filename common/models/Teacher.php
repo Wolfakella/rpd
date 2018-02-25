@@ -59,7 +59,7 @@ class Teacher extends \yii\db\ActiveRecord
 
     public function getCredentials()
     {
-	return $this->lastname .' ' . $this->firstname . ' ' . $this->middlename;
+	return $this->lastname .' ' . mb_substr($this->firstname, 0, 1) . '. ' . mb_substr($this->middlename, 0, 1) . '.';
     }
 
     /**

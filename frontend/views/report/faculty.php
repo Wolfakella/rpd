@@ -42,14 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'Кафедра',
 					'format' => 'html',
 					'value' => function ($model, $widget){
-						    	return Html::a($model->name, ['department/view', 'id' => $model->id]);
+						    	return Html::a($model->name, ['report/department', 'id' => $model->id]);
 					}
 				    ],
 				    'programsSuccess',
 				    'plansSuccess',
 				],
 			    ]); ?>
-		<h3>Учебные планы</h3>
+		<h3>Учебные планы
+		<?= Html::a(Yii::t('app', 'Upload Plan'), ['plan/upload'], ['class' => 'btn btn-warning']) ?>
+		</h3>
 			<?= GridView::widget([
 				'dataProvider' => new ActiveDataProvider([
 					'query' => $model->getPlans(),
@@ -60,9 +62,19 @@ $this->params['breadcrumbs'][] = $this->title;
 				'options' => ['class'=>'grid-view table-responsive'],
 				'columns' => [
 				    'id',
-				    'title',
+				    [
+					'attribute' => 'Учебный план',
+					'format' => 'html',
+					'value' => function ($model, $widget){
+						    	return Html::a($model->title, ['report/plan', 'id' => $model->id]);
+					}
+				    ],
 				    'department.name',
-				    'percent'
+				    'percent',
+            				['class' => 'yii\grid\ActionColumn',
+					'controller' => 'plan',
+					'template' => '{delete}'
+					],
 				],
 			    ]); ?>
 </div>
