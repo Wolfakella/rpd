@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?>
 	</br>	
 	<small><?= $model->faculty->name ?></small>
+	<?= Html::a('Скачать список дисциплин', ['report/list', 'id' => $model->id], ['class' => 'btn btn-info']); ?>
     </h1>
 
     <table class="table">

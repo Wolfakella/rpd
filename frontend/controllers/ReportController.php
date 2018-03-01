@@ -4,9 +4,11 @@ namespace frontend\controllers;
 
 use common\models\Department;
 use common\models\Plan;
+use common\models\Program;
 use common\models\Faculty;
 use common\models\Teacher;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 class ReportController extends \yii\web\Controller
 {
@@ -52,6 +54,28 @@ class ReportController extends \yii\web\Controller
 
     }
 
+    public function actionList($id)
+    {
+	$data = Program::find()->select(['id', "CONCAT(code, ' ', name) AS title", 'plan_id'])
+		->where(['department_id' => $id])->with([
+		'plan' => function (\yii\db\ActiveQuery $query) {
+        		$query->select(['id', "CONCAT(code, ' ', title) AS title", 'profile', 'type']);
+    		},
+	])->asArray()->all();
+	$result = ArrayHelper::index($data, null, [
+		function ($element) {
+			return $element['plan']['title'];
+		},
+		function ($element) {
+			return $element['plan']['profile'];
+		},
+		function ($element) {
+			return $element['plan']['type'];
+		},
+
+	]);
+	return $this->renderPartial('list', ['data' => $result]);
+    }
     /**
      * Finds the Faculty model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
