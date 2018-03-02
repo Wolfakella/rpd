@@ -107,6 +107,11 @@ class Plan extends \yii\db\ActiveRecord
         return $this->hasMany(Program::className(), ['plan_id' => 'id']);
     }
 
+    public function getHeader()
+    {
+        return $this->code . ' ' . $this->title . '. Профиль "' . $this->profile . '"';
+    }
+
 	public function getCompleted()
 	{
 		return $this->getPrograms()->where(['not', ['link' => null]])->count();

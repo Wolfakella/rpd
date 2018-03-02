@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Plan */
@@ -38,5 +39,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'year',
         ],
     ]) ?>
+	
+	<h2>Дисциплины</h2>
 
+	<?= GridView::widget([
+		'dataProvider' => $programs,
+		'columns' => [
+		    'code',
+		    [
+		        'attribute' => 'title',
+		        'format' => 'html',
+		        'value' => function ($model, $key, $index, $column){
+		            return Html::a($model->name, ['plan/hours', 'id' => $model->plan_id, 'program' => $index]);
+		        }
+		    ],
+		],
+	]); ?>
 </div>

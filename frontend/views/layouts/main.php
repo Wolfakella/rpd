@@ -22,6 +22,36 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <style>
+    #rpd {
+    	font-family: Times New Roman;
+    	font-size: 14pt;
+    }
+    #rpd > h2 {
+        font-weight: bold;
+        font-size: 14pt;
+        text-align: center;
+    }
+    #rpd > table {
+        width: 100%;
+    }
+    #rpd td {
+        padding: 0px 5px;
+    }
+    .hoursCell {
+        width: 20%;
+        text-align: center;
+    }
+    .tab {
+    	text-indent: 1.25cm;
+    }
+    .semesters {
+        text-align: center;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    </style>
 </head>
 <body>
 <?php $this->beginBody() ?>

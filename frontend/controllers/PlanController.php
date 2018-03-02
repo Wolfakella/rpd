@@ -9,6 +9,7 @@ use common\models\Program;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
+use yii\data\ActiveDataProvider;
 
 class PlanController extends Controller
 {
@@ -60,6 +61,14 @@ class PlanController extends Controller
 
 	}
 
+    public function actionHours($id, $program)
+    {
+    	$model = $this->findModel($id);
+    	
+    	$subject = new Program($model->link, $program);
+    	return $this->render('program', ['model' => $model, 'subject'=>$subject]);
+    }
+
     /**
      * Updates an existing Plan model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -86,9 +95,12 @@ class PlanController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+	$model = $this->findModel($id);
+	$programs = new ActiveDataProvider([
+		'query' => $model->getPrograms(),
+		'pagination' => false,
+	]);
+        return $this->render('view', compact(['model', 'programs']));
     }
 
     /**
