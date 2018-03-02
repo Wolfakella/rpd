@@ -48,9 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
       <div class="row">
-	<div class="col-xs-6">
+	<div class="col-xs-8">
 	<div class="panel panel-default">
-	  <div class="panel-heading"><h4>Статистика РПД по учебным планам</h4></div>
+	  <div class="panel-heading"><h4>Направления подготовки</h4></div>
 	  <div class="panel-body">
 		    <?= GridView::widget([
 			'dataProvider' => $plansDataProvider,
@@ -60,7 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			    'code',
 			    'title',
-			    'percent',
+				    ['attribute' => 'profile',
+				     //'options' => ['class' => 'col-xs-3'],
+				     'contentOptions' => [
+						'style'=>'white-space: normal'
+				    		],
+				    ],				    'type',
 				['class' => 'yii\grid\ActionColumn',
 				'controller' => 'plan',
 				'template' => '{view}',
@@ -71,9 +76,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 	</div>
 
-	<div class="col-xs-6">
+	<div class="col-xs-4">
 	<div class="panel panel-default">
-	  <div class="panel-heading"><h4>Статистика РПД по преподавателям</h4></div>
+	  <div class="panel-heading"><h4>Преподаватели</h4></div>
 	  <div class="panel-body">
 		    <?= GridView::widget([
 			'dataProvider' => $teachersDataProvider,
@@ -83,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			    'lastname',
 			    'firstname',
-			    'percent',
+//			    'percent',
 				['class' => 'yii\grid\ActionColumn',
 				'controller' => 'teacher',
 				'template' => '{view}',
@@ -107,8 +112,18 @@ $this->params['breadcrumbs'][] = $this->title;
 				  //  ['class' => 'yii\grid\SerialColumn'],
 
 				    'code',
-				    'name',
-				    'plan.title',
+				    ['attribute' => 'name',
+				     //'options' => ['class' => 'col-xs-3'],
+				     'contentOptions' => [
+						'style'=>'white-space: normal'
+				    		],
+				    ],				    
+				    ['attribute' => 'plan.header',
+				     //'options' => ['class' => 'col-xs-3'],
+				     'contentOptions' => [
+						'style'=>'white-space: normal'
+				    		],
+				    ],	
 					[
 						'attribute' => 'Преподаватель',
 						'format' => 'html',
@@ -118,6 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 				    ['class' => 'yii\grid\ActionColumn'],
 				],
+				//'options' => ['class'=>'grid-view table-responsive'],
 			    ]); ?>
 		   </div>
 	   </div>

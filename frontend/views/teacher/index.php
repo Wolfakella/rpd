@@ -4,48 +4,40 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\PlanSearch */
+/* @var $searchModel common\models\TeacherSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Plans');
+$this->title = Yii::t('app', 'Teachers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="plan-index">
+<div class="teacher-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Plan'), ['create'], ['class' => 'btn btn-success']) ?>
-	<?= Html::a(Yii::t('app', 'Upload Plan'), ['upload'], ['class' => 'btn btn-warning']) ?>
+        <?php // Html::a(Yii::t('app', 'Create Teacher'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-//            ['class' => 'yii\grid\SerialColumn'],
 
-//            'id',
-            'code',
-            'title',
-	    [
-	     'attribute' => 'profile',
-	     //'options' => ['class' => 'col-xs-3'],
-	     'contentOptions' => [
-			'style'=>'white-space: normal'
-	    		],
-	    ],	
-            'type',
-            //'link',
+            //'id',
+	    'user.email',
+            'lastname',
+            'firstname',
+            'middlename',
             [
-                'attribute' => 'Department ID',
+                'attribute' => 'department.name',
                 'format' => 'html',
                 'value' => function ($model, $key, $index, $column){
                     return Html::a($model->department->name, ['department/view', 'id' => $model->department_id]);
                 }
             ],
-            'year',
+
+            //'user_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

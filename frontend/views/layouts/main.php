@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -59,25 +60,36 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+//        'brandLabel' => Yii::$app->name,
+//        'brandUrl' => Yii::$app->homeUrl,
+	'brandLabel' => 'Экономический факультет',
+	'brandUrl' => Url::to(['report/faculty', 'id'=>2]),
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+/*
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
+*/
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
+        $menuItems[] = 
+	    '<li>'
+	    . Html::a('Кабинет преподавателя', ['report/teacher', 'id' => Yii::$app->user->identity->teacher->id])
+	    . '</li>'
+	    . '<li>'
+	    . Html::a('Личные данные', ['teacher/view', 'id' => Yii::$app->user->identity->teacher->id])
+	    . '</li>'
+	    . '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->email . ')',
+                'Выйти (' . Yii::$app->user->identity->teacher->credentials . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

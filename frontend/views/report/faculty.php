@@ -66,10 +66,17 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attribute' => 'Учебный план',
 					'format' => 'html',
 					'value' => function ($model, $widget){
-						    	return Html::a($model->title, ['report/plan', 'id' => $model->id]);
+						    	return Html::a($model->header, ['report/plan', 'id' => $model->id]);
 					}
 				    ],
-				    'department.name',
+				    'type',
+				    [
+					'attribute' => 'Кафедра',
+					'format' => 'html',
+					'value' => function ($model, $widget){
+						    	return Html::a($model->department->short_name, ['report/department', 'id' => $model->department_id]);
+					}
+				    ],
 				    'percent',
             				['class' => 'yii\grid\ActionColumn',
 					'controller' => 'plan',
