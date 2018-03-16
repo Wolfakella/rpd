@@ -32,6 +32,7 @@ class Faculty extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['name', 'short_name'], 'string', 'max' => 255],
             [['name'], 'unique'],
+			[['secretary_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teacher::className(), 'targetAttribute' => ['secretary_id' => 'id']],
         ];
     }
 
@@ -47,6 +48,14 @@ class Faculty extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSecretary()
+    {
+        return $this->hasOne(Teacher::className(), ['id' => 'secretary_id']);
+    }
+	
     /**
      * @return \yii\db\ActiveQuery
      */

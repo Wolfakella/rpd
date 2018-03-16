@@ -9,9 +9,10 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-	'request' => [
-		'cookieValidationKey' => 'DSFgksdifhiw899734hekfDFGisjdfi9374',
-	],
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => 'I7xaqcO5Nhg80amX3Kf4n0VOprJoq3Eq',
+        ],
     ],
 
     'name' => 'РПД',

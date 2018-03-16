@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use common\models\Faculty;
-
+use common\models\Teacher;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Department */
@@ -23,6 +23,10 @@ use common\models\Faculty;
 
     <?= $form->field($model, 'faculty_id')->dropDownList(
 	ArrayHelper::map(Faculty::find()->all(), 'id', 'name')
+	) ?>
+	
+	<?= $form->field($model, 'secretary_id')->dropDownList(
+	ArrayHelper::map(Teacher::find()->all(), 'id', 'credentials')
 	) ?>
 
     <div class="form-group">

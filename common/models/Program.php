@@ -23,6 +23,8 @@ use yii\helpers\VarDumper;
  */
 class Program extends \yii\db\ActiveRecord
 {
+	const SCENARIO_LINK = 'link';
+	
 	private $_temp;
 	private $_list;
 	
@@ -64,6 +66,13 @@ class Program extends \yii\db\ActiveRecord
         return 'program';
     }
 
+	public function scenarios()
+	{
+		$scn = parent::scenarios();
+		$scn[self::SCENARIO_LINK] = ['link'];
+		return $scn;
+	}
+	
     /**
      * @inheritdoc
      */

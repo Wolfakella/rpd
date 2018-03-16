@@ -42,7 +42,26 @@ $this->params['breadcrumbs'][] = $this->title;
 				'columns' => [
 				    'id',
 				    'name',
-				    'department.name',
+				    ['attribute' => 'plan.header',
+				     'options' => ['class' => 'col-xs-3'],
+				     'contentOptions' => [
+						'style'=>'white-space: normal'
+				    		],
+				    ],
+					[
+						'attribute' => 'link',
+						'format' => 'html',
+						'value' => function ($model, $key, $index, $column){
+							if(!empty($model->link))
+								return Html::a('Открыть РПД', $model->link);
+							else return null;
+						}
+					],
+				    'department.short_name',
+					['class' => 'yii\grid\ActionColumn',
+					'controller' => 'program',
+					'template' => '{update}'
+					],
 				],
 			    ]); ?>
 </div>

@@ -37,7 +37,9 @@ class Department extends \yii\db\ActiveRecord
             [['name', 'short_name'], 'string', 'max' => 255],
             [['id', 'name'], 'unique'],
             [['faculty_id'], 'exist', 'skipOnError' => true, 'targetClass' => Faculty::className(), 'targetAttribute' => ['faculty_id' => 'id']],
-        ];
+			[['secretary_id'], 'exist', 'skipOnError' => true, 'targetClass' => Teacher::className(), 'targetAttribute' => ['secretary_id' => 'id']],
+        
+		];
     }
 
     /**
@@ -61,6 +63,14 @@ class Department extends \yii\db\ActiveRecord
         return $this->hasOne(Faculty::className(), ['id' => 'faculty_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSecretary()
+    {
+        return $this->hasOne(Teacher::className(), ['id' => 'secretary_id']);
+    }
+	
     /**
      * @return \yii\db\ActiveQuery
      */

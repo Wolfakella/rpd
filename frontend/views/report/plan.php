@@ -77,7 +77,15 @@ $this->params['breadcrumbs'][] = $this->title;
 				    		],
 				    ],
 				    //'name',
-				    'link',
+					[
+						'attribute' => 'link',
+						'format' => 'html',
+						'value' => function ($model, $key, $index, $column){
+							if(!empty($model->link))
+								return Html::a('Открыть РПД', $model->link);
+							else return null;
+						}
+					],
 				    'teacher.credentials',
 				    ['attribute' => 'department.name',
 				     'options' => ['class' => 'col-xs-3'],
