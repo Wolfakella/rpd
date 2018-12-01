@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.7.7
+-- https://www.phpmyadmin.net/
 --
--- Хост: localhost
--- Время создания: Фев 25 2018 г., 23:30
--- Версия сервера: 5.7.21-0ubuntu0.16.04.1
--- Версия PHP: 7.0.22-0ubuntu0.16.04.1
+-- Хост: 127.0.0.1:3306
+-- Время создания: Дек 01 2018 г., 06:53
+-- Версия сервера: 5.6.38
+-- Версия PHP: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -30,28 +32,29 @@ CREATE TABLE `department` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `short_name` varchar(255) DEFAULT NULL,
-  `faculty_id` int(11) DEFAULT NULL
+  `faculty_id` int(11) DEFAULT NULL,
+  `secretary_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `department`
 --
 
-INSERT INTO `department` (`id`, `name`, `short_name`, `faculty_id`) VALUES
-(1, 'Кафедра вычислительной механики и информационных технологий', 'ВМиИТ', 1),
-(2, 'Кафедра компьютерной топологии и алгебры', 'КТиА', 1),
-(4, 'Кафедра теории управления и оптимизации', 'ТУиО', 1),
-(5, 'Кафедра вычислительной математики', 'ВычМат', 1),
-(19, 'Кафедра истории России', 'Историки', 1),
-(35, 'Кафедра математических методов в экономике', 'ММЭ', 2),
-(36, 'Кафедра социальной работы и социологии', 'СРиС', 2),
-(37, 'Кафедра учета и финансов', 'УиФ', 2),
-(38, 'Кафедра экономической теории и регионального развития', 'ЭТиРР', 2),
-(45, 'Кафедра теории и истории государства и права', 'Юристы', 1),
-(48, 'Кафедра общей и профессиональной педагогики', 'КОПП', 1),
-(53, 'Кафедра делового иностранного языка', 'ИнЯз', 1),
-(54, 'Кафедра философии', 'Философы', 1),
-(55, 'Кафедра физического воспитания и спорта', 'ФВиС', 1);
+INSERT INTO `department` (`id`, `name`, `short_name`, `faculty_id`, `secretary_id`) VALUES
+(1, 'Кафедра вычислительной механики и информационных технологий', 'ВМиИТ', 1, 2),
+(2, 'Кафедра компьютерной топологии и алгебры', 'КТиА', 1, NULL),
+(4, 'Кафедра теории управления и оптимизации', 'ТУиО', 1, NULL),
+(5, 'Кафедра вычислительной математики', 'ВычМат', 1, NULL),
+(19, 'Кафедра истории России', 'Историки', 1, NULL),
+(35, 'Кафедра математических методов в экономике', 'ММЭ', 2, NULL),
+(36, 'Кафедра социальной работы и социологии', 'СРиС', 2, NULL),
+(37, 'Кафедра учета и финансов', 'УиФ', 2, NULL),
+(38, 'Кафедра экономической теории и регионального развития', 'ЭТиРР', 2, NULL),
+(45, 'Кафедра теории и истории государства и права', 'Юристы', 1, NULL),
+(48, 'Кафедра общей и профессиональной педагогики', 'КОПП', 1, NULL),
+(53, 'Кафедра делового иностранного языка', 'ИнЯз', 1, NULL),
+(54, 'Кафедра философии', 'Философы', 1, NULL),
+(55, 'Кафедра физического воспитания и спорта', 'ФВиС', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -62,18 +65,19 @@ INSERT INTO `department` (`id`, `name`, `short_name`, `faculty_id`) VALUES
 CREATE TABLE `faculty` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) DEFAULT NULL
+  `short_name` varchar(255) DEFAULT NULL,
+  `secretary_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `faculty`
 --
 
-INSERT INTO `faculty` (`id`, `name`, `short_name`) VALUES
-(1, 'Математический факультет', 'МФ'),
-(2, 'Экономический факультет', 'ЭФ'),
-(3, 'Институт экономики отраслей, бизнеса и администрирования', 'ИЭкОБиА'),
-(4, 'Факультет управления', 'УФ');
+INSERT INTO `faculty` (`id`, `name`, `short_name`, `secretary_id`) VALUES
+(1, 'Математический факультет', 'МФ', NULL),
+(2, 'Экономический факультет', 'ЭФ', NULL),
+(3, 'Институт экономики отраслей, бизнеса и администрирования', 'ИЭкОБиА', NULL),
+(4, 'Факультет управления', 'УФ', NULL);
 
 -- --------------------------------------------------------
 
@@ -97,7 +101,9 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m171007_092314_create_department_table', 1508257988),
 ('m171007_092554_create_plan_table', 1515783942),
 ('m171007_092714_create_teacher_table', 1515869018),
-('m171007_092818_create_program_table', 1516302196);
+('m171007_092818_create_program_table', 1516302196),
+('m180316_171458_add_secretary_id_column_to_faculty_table', 1543634554),
+('m180316_171753_add_secretary_id_column_to_department_table', 1543634554);
 
 -- --------------------------------------------------------
 
@@ -160,7 +166,7 @@ INSERT INTO `program` (`id`, `code`, `name`, `link`, `plan_id`, `index`, `depart
 (291, 'Б1.Б.13', 'Эконометрика', NULL, 38, 12, 35, 2),
 (292, 'Б1.Б.14', 'Статистика', NULL, 38, 13, 35, 2),
 (293, 'Б1.Б.15', 'Безопасность жизнедеятельности', NULL, 38, 14, 55, NULL),
-(294, 'Б1.Б.16', 'Модуль "Бухгалтерский учет и анализ"', NULL, 38, 15, NULL, NULL),
+(294, 'Б1.Б.16', 'Модуль \"Бухгалтерский учет и анализ\"', NULL, 38, 15, NULL, NULL),
 (295, 'Б1.Б.16.1', 'Основы бухгалтерского учета и отчетности', NULL, 38, 16, 37, 2),
 (296, 'Б1.Б.16.2', 'Основы экономического анализа', NULL, 38, 17, 37, 2),
 (297, 'Б1.Б.16.3', 'Основы аудита', NULL, 38, 18, 37, NULL),
@@ -235,7 +241,7 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`id`, `lastname`, `middlename`, `firstname`, `department_id`, `user_id`) VALUES
 (1, 'Клейман', 'Владимировна', 'Анна', 38, 2),
-(2, 'Ольховский', 'Александрович', 'Николай', 37, 3);
+(2, 'Ольховский', 'Александрович', 'Николай', 35, 3);
 
 -- --------------------------------------------------------
 
@@ -259,8 +265,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'kleyman.av@csu.ru', 'll3sxw8l9iQW8z7y2o9FH2rvCQrVL5k0', '$2y$13$e0WgwqZGjJKxmknhK8P/a./Q9Efi4BRx2Cv8ajHLCfHZ94A7xJyUm', NULL, 10, 1508265395, 1508265395),
-(3, 'nikolay.olkhovsky@gmail.com', 'wwQZEmGZV-F9K1yV8TGVliIBu4hWDYjz', '$2y$13$oTnyhNYb8MlkJ07R1TTk7efo407S9Z.RK7KStgWoFfnzrm1JWNmJm', NULL, 10, 1515686244, 1515686244);
+(2, 'kleyman.av@csu.ru', 'll3sxw8l9iQW8z7y2o9FH2rvCQrVL5k0', '$2y$12$7W1sotVYTkm/ONSQTgenoOlkubPclFQ5rqLis1haX3lfUvPcIntPC', NULL, 10, 1508265395, 1508265395),
+(3, 'nikolay.olkhovsky@gmail.com', 'wwQZEmGZV-F9K1yV8TGVliIBu4hWDYjz', '$2y$12$2DDXzIac24iV1wG5M9vP2ulEZHosFx3YP2Wk09UQf545ie.A98/ju', NULL, 10, 1515686244, 1515686244);
 
 --
 -- Индексы сохранённых таблиц
@@ -272,14 +278,16 @@ INSERT INTO `user` (`id`, `email`, `auth_key`, `password_hash`, `password_reset_
 ALTER TABLE `department`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `idx-department-faculty_id` (`faculty_id`);
+  ADD KEY `idx-department-faculty_id` (`faculty_id`),
+  ADD KEY `idx-department-secretary_id` (`secretary_id`);
 
 --
 -- Индексы таблицы `faculty`
 --
 ALTER TABLE `faculty`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `idx-faculty-secretary_id` (`secretary_id`);
 
 --
 -- Индексы таблицы `migration`
@@ -328,31 +336,37 @@ ALTER TABLE `user`
 --
 ALTER TABLE `department`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
 --
 -- AUTO_INCREMENT для таблицы `faculty`
 --
 ALTER TABLE `faculty`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT для таблицы `plan`
 --
 ALTER TABLE `plan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
 --
 -- AUTO_INCREMENT для таблицы `program`
 --
 ALTER TABLE `program`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
+
 --
 -- AUTO_INCREMENT для таблицы `teacher`
 --
 ALTER TABLE `teacher`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -361,7 +375,14 @@ ALTER TABLE `user`
 -- Ограничения внешнего ключа таблицы `department`
 --
 ALTER TABLE `department`
-  ADD CONSTRAINT `fk-department-faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk-department-faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk-department-secretary_id` FOREIGN KEY (`secretary_id`) REFERENCES `teacher` (`id`) ON DELETE SET NULL;
+
+--
+-- Ограничения внешнего ключа таблицы `faculty`
+--
+ALTER TABLE `faculty`
+  ADD CONSTRAINT `fk-faculty-secretary_id` FOREIGN KEY (`secretary_id`) REFERENCES `teacher` (`id`) ON DELETE SET NULL;
 
 --
 -- Ограничения внешнего ключа таблицы `program`
@@ -377,6 +398,7 @@ ALTER TABLE `program`
 ALTER TABLE `teacher`
   ADD CONSTRAINT `fk-teacher-department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `fk-teacher-user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -4,8 +4,8 @@ return [
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=rpd',
-            'username' => 'root',
-            'password' => 'mysql',
+            'username' => 'rpd',
+            'password' => 'rpd',
             'charset' => 'utf8',
         ],
         'mailer' => [
